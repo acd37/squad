@@ -23,12 +23,7 @@ require('./config/passport')(passport);
 
 // Routes
 require('./routes/auth')(app);
-require('./routes/guardian')(app);
-require('./routes/school')(app);
-require('./routes/student')(app);
-require('./routes/teacher')(app);
 require('./routes/user')(app);
-require('./routes/actions')(app);
 
 // Models
 const db = require('./models');
