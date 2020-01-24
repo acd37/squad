@@ -21,10 +21,14 @@ import ListIcon from '@material-ui/icons/ListOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import AccountIcon from '@material-ui/icons/AccountCircleOutlined';
 import PeopleIcon from '@material-ui/icons/People';
+import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
+import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 
 import Profile from './Profile';
 import Account from './Account';
 import Tasks from './Tasks';
+import Squad from './Squad';
+import Feed from './Feed';
 import PrivateRoute from '../utils/PrivateRoute';
 import { Route, Link, Switch } from 'react-router-dom';
 import NotFound from './NotFound';
@@ -144,12 +148,30 @@ function Dashboard(props) {
       </div>
       <Divider />
       <List>
+        <Link to="/dashboard/feed" className={classes.normalizeLink}>
+          <ListItem button>
+            <ListItemIcon>
+              <SmsOutlinedIcon className={classes.drawerIcon} />
+            </ListItemIcon>
+            <ListItemText primary="Feed" />
+          </ListItem>
+        </Link>
+
         <Link to="/dashboard/profile" className={classes.normalizeLink}>
           <ListItem button>
             <ListItemIcon>
               <AccountIcon className={classes.drawerIcon} />
             </ListItemIcon>
             <ListItemText primary="Profile" />
+          </ListItem>
+        </Link>
+
+        <Link to="/dashboard/squad" className={classes.normalizeLink}>
+          <ListItem button>
+            <ListItemIcon>
+              <GroupOutlinedIcon className={classes.drawerIcon} />
+            </ListItemIcon>
+            <ListItemText primary="Squad" />
           </ListItem>
         </Link>
 
@@ -250,6 +272,8 @@ function Dashboard(props) {
             <PrivateRoute exact path="/dashboard/profile" component={Profile} />
             <PrivateRoute exact path="/dashboard/account" component={Account} />
             <PrivateRoute exact path="/dashboard/tasks" component={Tasks} />
+            <PrivateRoute exact path="/dashboard/squad" component={Squad} />
+            <PrivateRoute exact path="/dashboard/feed" component={Feed} />
             <Route component={NotFound} />
           </Switch>
         </div>
