@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { loginUser } from '../actions/authActions';
 import Copyright from '../utils/Copyright';
 
 // MaterialUI Importats
-import { Avatar, Button, TextField, Link, Paper, Box, Grid, Typography } from '@material-ui/core';
+import { Avatar, Button, TextField, Paper, Box, Grid, Typography } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -35,6 +35,10 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.primary.main
   }
 }));
 
@@ -103,13 +107,14 @@ const Login = () => {
 
             <Grid container>
               <Grid item xs>
-                <Link to="#" variant="body2">
+                <Link to="/forgot" className={classes.link}>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="#" variant="body2">
-                  Don't have an account? Sign up
+                Don't have an account?{' '}
+                <Link to="/register" className={classes.link}>
+                  Sign up
                 </Link>
               </Grid>
             </Grid>

@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Account() {
-  const [password, setPassword] = useState('password');
+  const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPassword2, setNewPassword2] = useState('');
   const [email, setEmail] = useState('alecdown@gmail.com');
@@ -82,11 +82,11 @@ export default function Account() {
               value={bio}
               onChange={e => setBio(e.target.value)}
             />
-            <Button style={{ width: 150 }}>Save</Button>
+            <Button>Save</Button>
           </Box>
         </Grid>
 
-        <Grid item md={12} lg={6}>
+        <Grid item xs={12} lg={6}>
           <Box>
             <Typography variant="h5">Private Information</Typography>
             <div className={classes.formDisplay}>
@@ -146,55 +146,59 @@ export default function Account() {
                 onChange={e => setPhone(e.target.value)}
               />
             </div>
-            <Button style={{ width: 150 }}>Save</Button>
+            <Button>Save</Button>
           </Box>
         </Grid>
 
-        <Grid item md={12} lg={6}>
+        <Grid item xs={12} lg={6}>
           <Box>
             <Typography variant="h5">Reset Password</Typography>
-            <Typography variant="p">Please enter your current password to get started.</Typography>
-            <TextField
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              id="password"
-              label="Password"
-              name="password"
-              type="password"
-              autoComplete="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-            <Typography variant="p">Please enter a new password.</Typography>
-            <TextField
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              id="newPassword"
-              label="New Password"
-              name="newPassword"
-              type="password"
-              autoComplete="newPassword"
-              value={newPassword}
-              onChange={e => setNewPassword(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              id="newPassword2"
-              label="Password"
-              name="newPassword2"
-              type="password"
-              autoComplete="newPassword2"
-              value={newPassword2}
-              onChange={e => setNewPassword2(e.target.value)}
-            />
-            <Button style={{ width: 150 }}>Save</Button>
+            <Typography variant="body2">
+              Please enter your current password to get started.
+            </Typography>
+            <form>
+              <TextField
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                id="password"
+                label="Password"
+                name="password"
+                type="password"
+                autoComplete="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+              <Typography variant="body2">Please enter a new password.</Typography>
+              <TextField
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                id="newPassword"
+                label="New Password"
+                name="newPassword"
+                type="password"
+                autoComplete="newPassword"
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+              />
+              <TextField
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                id="newPassword2"
+                label="Password"
+                name="newPassword2"
+                type="password"
+                autoComplete="newPassword2"
+                value={newPassword2}
+                onChange={e => setNewPassword2(e.target.value)}
+              />
+              <Button>Save</Button>
+            </form>
           </Box>
         </Grid>
-        <Grid item xs={false} md={12} lg={4}>
+        <Grid item xs={12} lg={4}>
           <Box>
             <Typography variant="h5">Profile Image</Typography>
             <div className={classes.flexBox}>

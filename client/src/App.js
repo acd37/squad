@@ -7,6 +7,7 @@ import jwtDecode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import PrivateRoute from './utils/PrivateRoute';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import NotFound from './pages/NotFound';
@@ -41,6 +42,7 @@ function App() {
           <div className="application">
             <Switch>
               <Route exact path="/" component={Login} />
+              <Route exact path="/register" component={Register} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <Route component={NotFound} />
             </Switch>

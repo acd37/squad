@@ -30,7 +30,7 @@ export default function NotFound() {
     >
       <p style={{ fontSize: '1.8rem', margin: 0, fontWeight: 700 }}>404</p>
       <p style={{ fontSize: '1.1rem', margin: 0, fontWeight: 700 }}>Page not found.</p>
-      <p>The page you are looking for might have been removed</p>
+      <p>The page you are looking for might have been removed or does not exist yet.</p>
       <Button fullWidth className={classes.button} onClick={() => history.push('/')}>
         Return to website
       </Button>

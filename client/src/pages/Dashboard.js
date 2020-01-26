@@ -26,7 +26,7 @@ import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 
 import Profile from './Profile';
 import Account from './Account';
-import Tasks from './Tasks';
+import Streaks from './Streaks';
 import Squad from './Squad';
 import Feed from './Feed';
 import PrivateRoute from '../utils/PrivateRoute';
@@ -41,6 +41,10 @@ const drawerWidth = 260;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
+  },
+  logo: {
+    height: 24,
+    marginRight: 20
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -143,20 +147,15 @@ function Dashboard(props) {
         }}
         className={classes.toolbar}
       >
-        <PeopleIcon style={{ marginRight: 20, color: theme.palette.primary.main }} />
+        <img
+          className={classes.logo}
+          src={require('../assets/images/app-icon-logo_144.png')}
+          alt="logo"
+        />
         <Typography variant="h6">Squad</Typography>
       </div>
       <Divider />
       <List>
-        <Link to="/dashboard/feed" className={classes.normalizeLink}>
-          <ListItem button>
-            <ListItemIcon>
-              <SmsOutlinedIcon className={classes.drawerIcon} />
-            </ListItemIcon>
-            <ListItemText primary="Feed" />
-          </ListItem>
-        </Link>
-
         <Link to="/dashboard/profile" className={classes.normalizeLink}>
           <ListItem button>
             <ListItemIcon>
@@ -175,14 +174,25 @@ function Dashboard(props) {
           </ListItem>
         </Link>
 
-        <Link to="/dashboard/tasks" className={classes.normalizeLink}>
+        <Link to="/dashboard/streaks" className={classes.normalizeLink}>
           <ListItem button>
             <ListItemIcon>
               <ListIcon className={classes.drawerIcon} />
             </ListItemIcon>
-            <ListItemText primary="Tasks" />
+            <ListItemText primary="Streaks" />
           </ListItem>
         </Link>
+
+        <Link to="/dashboard/feed" className={classes.normalizeLink}>
+          <ListItem button>
+            <ListItemIcon>
+              <SmsOutlinedIcon className={classes.drawerIcon} />
+            </ListItemIcon>
+            <ListItemText primary="Feed" />
+          </ListItem>
+        </Link>
+
+        <Divider style={{ margin: '5%', border: '0.1px solid rgba(255, 255, 255, 0.20)' }} />
 
         <Link to="/dashboard/account" className={classes.normalizeLink}>
           <ListItem button>
@@ -192,8 +202,6 @@ function Dashboard(props) {
             <ListItemText primary="Account" />
           </ListItem>
         </Link>
-
-        <Divider inset style={{ margin: '5%', border: '0.1px solid rgba(255, 255, 255, 0.20)' }} />
 
         <ListItem button onClick={handleLogout}>
           <ListItemIcon>
@@ -242,6 +250,7 @@ function Dashboard(props) {
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={mobileOpen}
             onClose={handleDrawerToggle}
+            onClick={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper
             }}
@@ -267,11 +276,11 @@ function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
-        <div style={{ paddingLeft: 30 }}>
+        <div>
           <Switch>
             <PrivateRoute exact path="/dashboard/profile" component={Profile} />
             <PrivateRoute exact path="/dashboard/account" component={Account} />
-            <PrivateRoute exact path="/dashboard/tasks" component={Tasks} />
+            <PrivateRoute exact path="/dashboard/streaks" component={Streaks} />
             <PrivateRoute exact path="/dashboard/squad" component={Squad} />
             <PrivateRoute exact path="/dashboard/feed" component={Feed} />
             <Route component={NotFound} />

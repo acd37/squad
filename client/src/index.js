@@ -25,10 +25,11 @@ const theme = createMuiTheme({
     MuiButton: {
       text: {
         backgroundColor: '#fe446c',
+        width: 150,
         color: '#fff',
         boxShadow: 'none',
-        paddingTop: 10,
-        paddingBottom: 10,
+        padding: '10px 20px',
+        marginBottom: '10px',
         '&:hover': {
           backgroundColor: '#fe6B8B'
         }
