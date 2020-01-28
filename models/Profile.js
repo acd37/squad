@@ -17,8 +17,9 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.STRING,
       allowNull: false
     },
-    gravatar: {
-      type: Sequelize.STRING
+    avatar: {
+      type: Sequelize.STRING,
+      defaultValue: ''
     },
     phone: {
       type: Sequelize.STRING
@@ -32,7 +33,8 @@ module.exports = function(sequelize, Sequelize) {
     Profile.belongsTo(models.user, {
       foreignKey: {
         allowNull: false
-      }
+      },
+      onDelete: 'CASCADE'
     });
   };
 

@@ -6,7 +6,7 @@ const Alerts = ({ alert }) => {
   const messages = useSelector(state => state.messages);
 
   if (messages.registration) {
-    alert.info(messages.registration);
+    alert.success(messages.registration);
   }
   return <Fragment />;
 };

@@ -25,8 +25,16 @@ module.exports = function(sequelize, Sequelize) {
   Streak.associate = function(models) {
     Streak.belongsTo(models.squad, {
       foreignKey: {
-        allowNull: false
-      }
+        allowNull: true
+      },
+      onDelete: 'CASCADE'
+    });
+
+    Streak.belongsTo(models.user, {
+      foreignKey: {
+        allowNull: true
+      },
+      onDelete: 'CASCADE'
     });
   };
 

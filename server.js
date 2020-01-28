@@ -28,6 +28,9 @@ require('./config/passport')(passport);
 // Routes
 require('./routes/auth')(app);
 require('./routes/user')(app);
+require('./routes/profile')(app);
+require('./routes/streak')(app);
+require('./routes/squad')(app);
 
 // Models
 const db = require('./models');

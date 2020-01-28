@@ -6,7 +6,7 @@ module.exports = function(app) {
   // Load input validation
   const validateRegisterInput = require('../validation/register');
 
-  // @route GET api/users/test
+  // @route GET api/user/test
   // @desc tests the users api route
   app.get('/api/user/test', (req, res) => {
     res.json({
@@ -15,7 +15,28 @@ module.exports = function(app) {
     });
   });
 
-  // @route POST api/users/
+  // @route GET api/user/
+  // @desc gets a user by auth token
+  app.get('/api/user', passport.authenticate('jwt', { session: false }), (req, res) => {
+    db.user
+      .findOne({
+        where: {
+          id: req.user.id
+        },
+        raw: true
+      })
+      .then(user => {
+        // remove password before sending
+        delete user.password;
+
+        res.status(200).json(user);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
+  // @route POST api/user/
   // @desc creates a new user
   app.post('/api/user', (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -61,7 +82,7 @@ module.exports = function(app) {
   });
 
   // @route PUT api/users/
-  // @desc updates a user
+  // @desc updates a user email
   app.put('/api/user', passport.authenticate('jwt', { session: false }), (req, res) => {
     db.user
       .update(
@@ -84,7 +105,12 @@ module.exports = function(app) {
             })
             .then(user => {
               let updatedUser = user.get();
-              res.json(updatedUser);
+              res.json({
+                id: user.id,
+                email: user.email,
+                updatedAt: user.updatedAt,
+                squaddId: user.squadId
+              });
             })
             .catch(err => console.log(err));
         }
