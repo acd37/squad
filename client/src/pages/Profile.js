@@ -23,6 +23,9 @@ import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-pro
 import 'react-circular-progressbar/dist/styles.css';
 import { formatPhoneNumber } from '../utils/phoneNumberFormat';
 
+import { createMessage } from '../actions/messageActions';
+import { useDispatch } from 'react-redux';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -100,13 +103,15 @@ export default function Profile() {
   };
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
   return (
     <div>
       <Typography variant="h4">Profile</Typography>
       <Divider style={{ marginBottom: 20 }} />
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={12} md={6} lg={4}>
           <Box>
             <Typography variant="h5">Profile Details</Typography>
             <div className={classes.flexBox}>
@@ -122,7 +127,7 @@ export default function Profile() {
             </div>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={12} md={6} lg={4}>
           <Box>
             <Typography variant="h5">Streaks</Typography>
             <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>

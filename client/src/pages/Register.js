@@ -47,10 +47,17 @@ const Register = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth.isAuthenticated);
+  const errors = useSelector(state => state.errors);
 
   useEffect(() => {
     if (auth) {
       history.push('/dashboard/profile');
+    }
+  });
+
+  useEffect(() => {
+    if (errors) {
+      console.log(errors);
     }
   });
 
@@ -75,6 +82,8 @@ const Register = () => {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              error={errors.email && true}
+              helperText={errors.email}
               required
               fullWidth
               autoFocus
@@ -88,6 +97,8 @@ const Register = () => {
               onChange={e => setEmail(e.target.value)}
             />
             <TextField
+              error={errors.password && true}
+              helperText={errors.password}
               required
               fullWidth
               variant="outlined"
@@ -101,6 +112,8 @@ const Register = () => {
               onChange={e => setPassword(e.target.value)}
             />
             <TextField
+              error={errors.password2 && true}
+              helperText={errors.password2}
               required
               fullWidth
               variant="outlined"

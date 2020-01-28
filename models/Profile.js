@@ -17,15 +17,14 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.STRING,
       allowNull: false
     },
-    thumbnail: {
+    gravatar: {
       type: Sequelize.STRING
     },
-    status: {
+    phone: {
       type: Sequelize.STRING
     },
-    taskPoints: {
-      type: Sequelize.INTEGER,
-      defaultValue: 0
+    bio: {
+      type: Sequelize.STRING
     }
   });
 

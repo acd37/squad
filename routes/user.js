@@ -3,6 +3,9 @@ module.exports = function(app) {
   const db = require('../models');
   const passport = require('passport');
 
+  // Load input validation
+  const validateRegisterInput = require('../validation/register');
+
   // @route GET api/users/test
   // @desc tests the users api route
   app.get('/api/user/test', (req, res) => {
@@ -15,6 +18,13 @@ module.exports = function(app) {
   // @route POST api/users/
   // @desc creates a new user
   app.post('/api/user', (req, res) => {
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    // check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     db.user
       .findOne({
         where: {

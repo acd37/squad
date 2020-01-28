@@ -4,6 +4,9 @@ module.exports = function(app) {
   const jwt = require('jsonwebtoken');
   const keys = require('../config/keys');
 
+  // Load input validation
+  const validateLoginInput = require('../validation/login');
+
   // @route GET api/auth/test
   // @desc tests the auth api route
   app.get('/api/auth/test', (req, res) => {
@@ -16,6 +19,13 @@ module.exports = function(app) {
   // @route POST api/auth/login
   // @desc logs in a user
   app.post('/api/auth/login', (req, res) => {
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    // check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     const { email, password } = req.body;
 
     // Find user by email

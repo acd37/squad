@@ -48,6 +48,7 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth.isAuthenticated);
+  const errors = useSelector(state => state.errors);
 
   useEffect(() => {
     if (auth) {
@@ -75,6 +76,8 @@ const Login = () => {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              error={errors.email && true}
+              helperText={errors.email}
               required
               fullWidth
               autoFocus
@@ -88,6 +91,8 @@ const Login = () => {
               onChange={e => setEmail(e.target.value)}
             />
             <TextField
+              error={errors.password && true}
+              helperText={errors.password}
               required
               fullWidth
               variant="outlined"
