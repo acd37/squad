@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -35,6 +35,9 @@ import NotFound from './NotFound';
 
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
+import { getUserProfile } from '../actions/profileActions';
+import { getUserStreaks } from '../actions/streakActions';
+import { getUserSquad } from '../actions/squadActions';
 
 const drawerWidth = 260;
 
@@ -134,6 +137,18 @@ function Dashboard(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserStreaks());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserSquad());
+  }, [dispatch]);
 
   const drawer = (
     <div>

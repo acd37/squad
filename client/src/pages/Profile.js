@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Typography,
   Divider,
@@ -22,9 +23,6 @@ import DirectionsRunOutlinedIcon from '@material-ui/icons/DirectionsRunOutlined'
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { formatPhoneNumber } from '../utils/phoneNumberFormat';
-
-import { createMessage } from '../actions/messageActions';
-import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,51 +57,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Profile() {
-  const profile = {
-    handle: 'acd37',
-    avatar: require('../assets/images/alec.jpg'),
-    firstName: 'Alec',
-    lastName: 'Down',
-    jobTitle: 'Developer',
-    email: 'alecdown@gmail.com',
-    phone: '8018213438',
-    site: 'alecdown.com',
-    city: 'Nashville',
-    state: 'TN',
-    company: '2U, Inc.',
-    squad: {
-      squadName: 'Career Services'
-    },
-    streaks: [
-      {
-        id: 0,
-        squadId: 123,
-        title: 'No drinking',
-        length: 7,
-        icon: <LocalBarOutlinedIcon />,
-        streak: 3
-      },
-      {
-        id: 1,
-        squadId: 123,
-        title: 'No smoking',
-        length: 7,
-        icon: <SmokeFreeOutlinedIcon />,
-        streak: 7
-      },
-      {
-        id: 2,
-        squadId: 123,
-        title: 'Run every day for a month',
-        length: 30,
-        icon: <DirectionsRunOutlinedIcon />,
-        streak: 12
-      }
-    ]
-  };
   const classes = useStyles();
 
+  const profile = useSelector(state => state.profile);
+  const streaks = useSelector(state => state.streaks);
+  const userEmail = useSelector(state => state.auth.user.email);
+  const squad = useSelector(state => state.squad);
   const dispatch = useDispatch();
+
+  const oneDay = 1000 * 60 * 60 * 24;
 
   return (
     <div>
@@ -131,11 +93,11 @@ export default function Profile() {
           <Box>
             <Typography variant="h5">Streaks</Typography>
             <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-              {profile.streaks.map((item, idx) => (
+              {streaks.map((item, idx) => (
                 <div key={idx}>
                   <div className={classes.circularProgressBar}>
                     <CircularProgressbarWithChildren
-                      value={item.streak}
+                      value={(new Date() - Date.parse(item.createdAt)) / oneDay}
                       maxValue={item.length}
                       styles={buildStyles({
                         pathColor: '#fe446c'
@@ -143,7 +105,8 @@ export default function Profile() {
                     >
                       <span style={{ color: '#fe446c' }}>{item.icon}</span>
                     </CircularProgressbarWithChildren>
-                    <span style={{ fontSize: '0.5rem', marginTop: 5 }}>{item.title}</span>
+                    {/*<span style={{ fontSize: '0.5rem', marginTop: 5 }}>{item.streak}/{item.max}</span>*/}
+                    <span style={{ fontSize: '0.5rem', marginTop: 5 }}>{item.description}</span>
                   </div>
                 </div>
               ))}
@@ -176,7 +139,7 @@ export default function Profile() {
                   <GroupOutlinedIcon />
                 </ListItemIcon>
                 <span style={{ marginRight: 4 }}>Squad Member of</span>
-                <ListItemText primary={profile.squad.squadName} className={classes.text} />
+                <ListItemText primary={squad.squadName} className={classes.text} />
               </ListItem>
             </List>
           </Box>
@@ -189,7 +152,7 @@ export default function Profile() {
                 <ListItemIcon>
                   <EmailOutlinedIcon />
                 </ListItemIcon>
-                <ListItemText primary={profile.email} className={classes.text} />
+                <ListItemText primary={userEmail} className={classes.text} />
               </ListItem>
               <ListItem>
                 <ListItemIcon>

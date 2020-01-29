@@ -45,7 +45,8 @@ module.exports = function(app) {
             .then(user => {
               // create the payload
               const payload = {
-                id: user.id
+                id: user.id,
+                email: user.email
               };
 
               // sign the token

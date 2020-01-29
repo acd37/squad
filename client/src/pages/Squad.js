@@ -13,6 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Box from '../components/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   squadInfo: {
@@ -22,29 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Squad() {
-  const [squad, setSquad] = useState([
-    {
-      id: 0,
-      firstName: 'Kelsey',
-      lastName: 'Down',
-      avatar: 'https://randomuser.me/api/portraits/women/41.jpg',
-      bio: "This is a sample bio line. I'm an editor!"
-    },
-    {
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      bio: "This is a sample bio line. I'm an poet!",
-      avatar: 'https://randomuser.me/api/portraits/men/2.jpg'
-    },
-    {
-      id: 2,
-      firstName: 'Wendy',
-      lastName: 'Sykes',
-      comment: "This is a sample bio line. I'm a software developer!",
-      avatar: 'https://randomuser.me/api/portraits/women/59.jpg'
-    }
-  ]);
+  const squad = useSelector(state => state.squad);
 
   const classes = useStyles();
 
@@ -59,19 +38,19 @@ export default function Squad() {
         <Grid item xs={12}>
           <Box>
             <Typography variant="subtitle2">
-              Squad Name: <span className={classes.squadInfo}>Career Services</span>
+              Squad Name: <span className={classes.squadInfo}>{squad.squadName}</span>
             </Typography>
             <Typography variant="subtitle2">
-              Squad Size: <span className={classes.squadInfo}>4</span>
+              Squad Size: <span className={classes.squadInfo}></span>
             </Typography>
             <Typography variant="subtitle2">
-              Captain: <span className={classes.squadInfo}>Alec Down</span>
+              Captain: <span className={classes.squadInfo}></span>
             </Typography>
             <Divider />
             <Typography variant="subtitle2"></Typography>
             <Alert severity="warning">Only share your invite code with people you trust.</Alert>
             <Typography variant="subtitle2">
-              Invite code: <span className={classes.squadInfo}>jhsdf43-sdfs423-fsdf34-dfsss</span>
+              Invite code: <span className={classes.squadInfo}>{squad.id}</span>
             </Typography>
           </Box>
         </Grid>
@@ -82,26 +61,26 @@ export default function Squad() {
       </Typography>
 
       <Grid container spacing={2}>
-        {squad.map((item, idx) => (
-          <Grid item xs={12} key={idx}>
-            <Box>
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt={item.firstName} src={item.avatar} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={`${item.firstName} ${item.lastName}`}
-                  secondary={
-                    <React.Fragment>
-                      <Typography component="span" variant="body2" color="textPrimary"></Typography>
-                      {item.bio}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            </Box>
-          </Grid>
-        ))}
+        {/*{squad.map((item, idx) => (*/}
+        {/*  <Grid item xs={12} key={idx}>*/}
+        {/*    <Box>*/}
+        {/*      <ListItem alignItems="flex-start">*/}
+        {/*        <ListItemAvatar>*/}
+        {/*          <Avatar alt={item.firstName} src={item.avatar} />*/}
+        {/*        </ListItemAvatar>*/}
+        {/*        <ListItemText*/}
+        {/*          primary={`${item.firstName} ${item.lastName}`}*/}
+        {/*          secondary={*/}
+        {/*            <React.Fragment>*/}
+        {/*              <Typography component="span" variant="body2" color="textPrimary"></Typography>*/}
+        {/*              {item.bio}*/}
+        {/*            </React.Fragment>*/}
+        {/*          }*/}
+        {/*        />*/}
+        {/*      </ListItem>*/}
+        {/*    </Box>*/}
+        {/*  </Grid>*/}
+        {/*))}*/}
       </Grid>
     </div>
   );

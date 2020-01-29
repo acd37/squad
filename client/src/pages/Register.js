@@ -112,7 +112,7 @@ const Register = () => {
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
-            <PasswordStrengthMeter password={password} />
+            {/*<PasswordStrengthMeter password={password} />*/}
 
             <TextField
               error={errors.password2 && true}

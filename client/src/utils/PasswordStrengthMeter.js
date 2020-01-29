@@ -42,7 +42,7 @@ const PasswordStrengthMeter = props => {
       case 3:
         return "Strong. You're pretty secure.";
       case 4:
-        return "Awesome! You're super secure.";
+        return 'Awesome! This is a secure password.';
       default:
         return 'Weak';
     }

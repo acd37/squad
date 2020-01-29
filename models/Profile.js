@@ -26,6 +26,18 @@ module.exports = function(sequelize, Sequelize) {
     },
     bio: {
       type: Sequelize.STRING
+    },
+    site: {
+      type: Sequelize.STRING
+    },
+    city: {
+      type: Sequelize.STRING
+    },
+    state: {
+      type: Sequelize.STRING
+    },
+    company: {
+      type: Sequelize.STRING
     }
   });
 

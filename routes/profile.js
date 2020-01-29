@@ -69,7 +69,11 @@ module.exports = function(app) {
           lastName: req.body.lastName,
           handle: req.body.handle,
           phone: req.body.phone,
-          bio: req.body.bio
+          bio: req.body.bio,
+          site: req.body.site,
+          state: req.body.state,
+          city: req.body.city,
+          company: req.body.company
         },
         {
           where: {

@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
 import { Typography, Divider, Grid, Button } from '@material-ui/core/';
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2
-} from 'react-html-parser';
 import LocalBarOutlinedIcon from '@material-ui/icons/LocalBarOutlined';
 import SmokeFreeOutlinedIcon from '@material-ui/icons/SmokeFreeOutlined';
 import DirectionsRunOutlinedIcon from '@material-ui/icons/DirectionsRunOutlined';
@@ -24,6 +19,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -42,32 +38,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Streaks() {
-  const [streaks, setStreaks] = useState([
-    {
-      id: 0,
-      squadId: 123,
-      title: 'No drinking',
-      length: 7,
-      icon: <LocalBarOutlinedIcon />,
-      streak: 3
-    },
-    {
-      id: 1,
-      squadId: 123,
-      title: 'No smoking',
-      length: 7,
-      icon: <SmokeFreeOutlinedIcon />,
-      streak: 7
-    },
-    {
-      id: 2,
-      squadId: 123,
-      title: 'Run every day for a month',
-      length: 30,
-      icon: <DirectionsRunOutlinedIcon />,
-      streak: 12
-    }
-  ]);
+  const streaks = useSelector(state => state.streaks);
+  const oneDay = 1000 * 60 * 60 * 24;
 
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('individual');
@@ -95,8 +67,6 @@ export default function Streaks() {
       icon: '',
       streak: 0
     };
-
-    setStreaks(existingStreaks => [...existingStreaks, newStreak]);
     handleClose();
   };
 
@@ -156,7 +126,7 @@ export default function Streaks() {
             <Box>
               <div className={classes.circularProgressBar}>
                 <CircularProgressbarWithChildren
-                  value={item.streak}
+                  value={(new Date() - Date.parse(item.createdAt)) / oneDay}
                   maxValue={item.length}
                   styles={buildStyles({
                     pathColor: '#fe446c'
@@ -164,11 +134,11 @@ export default function Streaks() {
                 >
                   <span style={{ color: '#fe446c' }}>{item.icon}</span>
                   <div style={{ fontSize: '1.2rem' }}>
-                    {item.streak} / {item.length}
+                    {Math.floor((new Date() - Date.parse(item.createdAt)) / oneDay)}/ {item.length}
                   </div>
                 </CircularProgressbarWithChildren>
               </div>
-              <p style={{ textAlign: 'center' }}>{item.title}</p>
+              <p style={{ textAlign: 'center' }}>{item.description}</p>
             </Box>
           </Grid>
         ))}

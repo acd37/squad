@@ -1,6 +1,7 @@
 module.exports = function(app) {
   const db = require('../models');
   const passport = require('passport');
+  const { Op } = require('sequelize');
 
   // @route GET api/streak/test
   // @desc tests the profiles api route
@@ -9,6 +10,27 @@ module.exports = function(app) {
       success: true,
       msg: 'Testing endpoint works correctly.'
     });
+  });
+
+  // @route GET api/streak
+  // @desc tests the profiles api route
+  app.get('/api/streak', passport.authenticate('jwt', { session: false }), (req, res) => {
+    db.streak
+      .findAll({
+        where: {
+          [Op.or]: [
+            {
+              userId: req.user.id
+            },
+            {
+              squadId: req.user.squadId
+            }
+          ]
+        }
+      })
+      .then(streaks => {
+        res.json(streaks);
+      });
   });
 
   // @route POST api/streak/individual

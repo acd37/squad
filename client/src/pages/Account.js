@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Typography, Divider, TextField, Grid, Button } from '@material-ui/core/';
 import Box from '../components/Box';
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,11 +43,51 @@ export default function Account() {
   const [newPassword, setNewPassword] = useState('');
   const [newPassword2, setNewPassword2] = useState('');
   const [email, setEmail] = useState('alecdown@gmail.com');
-  const [username, setUsername] = useState('acd37');
   const [firstName, setFirstName] = useState('Alec');
   const [lastName, setLastName] = useState('Down');
   const [phone, setPhone] = useState('801-821-3438');
   const [bio, setBio] = useState('This is a short biography about me and who I am.');
+  const [handle, setHandle] = useState('');
+
+  const profile = useSelector(state => state.profile);
+  const userEmail = useSelector(state => state.auth.user.email);
+
+  useEffect(() => {
+    setHandle(profile.handle);
+  }, [profile.handle]);
+
+  useEffect(() => {
+    setBio(profile.bio);
+  }, [profile.bio]);
+
+  useEffect(() => {
+    setFirstName(profile.firstName);
+  }, [profile.firstName]);
+
+  useEffect(() => {
+    setLastName(profile.lastName);
+  }, [profile.lastName]);
+
+  useEffect(() => {
+    setEmail(userEmail);
+  }, [userEmail]);
+
+  useEffect(() => {
+    setPhone(profile.phone);
+  }, [profile.phone]);
+
+  useEffect(() => {
+    setPassword(profile.password);
+  }, [profile.password]);
+
+  useEffect(() => {
+    setNewPassword(profile.newPassword);
+  }, [profile.newPassword]);
+
+  useEffect(() => {
+    setNewPassword2(profile.newPassword2);
+  }, [profile.newPassword2]);
+
   const classes = useStyles();
 
   return (
@@ -61,13 +103,13 @@ export default function Account() {
               required
               variant="outlined"
               margin="normal"
-              id="username"
-              label="Username"
-              name="username"
+              id="handle"
+              label="Handle"
+              name="handle"
               type="text"
-              autoComplete="username"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
+              autoComplete="handle"
+              value={handle}
+              onChange={e => setHandle(e.target.value)}
             />
             <TextField
               multiline
@@ -202,11 +244,7 @@ export default function Account() {
           <Box>
             <Typography variant="h5">Profile Image</Typography>
             <div className={classes.flexBox}>
-              <img
-                src={require('../assets/images/alec.jpg')}
-                alt="profile"
-                className={classes.profileImage}
-              />
+              <img src={profile.avatar} alt="profile" className={classes.profileImage} />
               <Button
                 startIcon={<CloudUploadOutlinedIcon />}
                 style={{ paddingRight: 20, paddingLeft: 20 }}

@@ -11,6 +11,20 @@ module.exports = function(app) {
     });
   });
 
+  // @route GET api/squad
+  // @desc gets a user's squad details
+  app.get('/api/squad', passport.authenticate('jwt', { session: false }), (req, res) => {
+    db.squad
+      .findOne({
+        where: {
+          id: req.user.squadId
+        }
+      })
+      .then(squad => {
+        res.json(squad);
+      });
+  });
+
   // @route POST api/squad/
   // @desc creates a squad
   app.post('/api/squad', passport.authenticate('jwt', { session: false }), (req, res) => {
