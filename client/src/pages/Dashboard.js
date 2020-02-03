@@ -20,24 +20,24 @@ import SearchIcon from '@material-ui/icons/Search';
 import ListIcon from '@material-ui/icons/ListOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import AccountIcon from '@material-ui/icons/AccountCircleOutlined';
-import PeopleIcon from '@material-ui/icons/People';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
-
+import NoProfile from './NoProfile';
 import Profile from './Profile';
 import Account from './Account';
 import Streaks from './Streaks';
 import Squad from './Squad';
 import Feed from './Feed';
+import NewProfile from './NewProfile';
 import PrivateRoute from '../utils/PrivateRoute';
 import { Route, Link, Switch } from 'react-router-dom';
 import NotFound from './NotFound';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import { getUserProfile } from '../actions/profileActions';
 import { getUserStreaks } from '../actions/streakActions';
-import { getUserSquad } from '../actions/squadActions';
+import { getUserSquad, getSquadMembers } from '../actions/squadActions';
 
 const drawerWidth = 260;
 
@@ -149,6 +149,12 @@ function Dashboard(props) {
   useEffect(() => {
     dispatch(getUserSquad());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getSquadMembers());
+  }, [dispatch]);
+
+  const profile = useSelector(state => state.profile);
 
   const drawer = (
     <div>
@@ -293,11 +299,25 @@ function Dashboard(props) {
 
         <div>
           <Switch>
-            <PrivateRoute exact path="/dashboard/profile" component={Profile} />
-            <PrivateRoute exact path="/dashboard/account" component={Account} />
-            <PrivateRoute exact path="/dashboard/streaks" component={Streaks} />
-            <PrivateRoute exact path="/dashboard/squad" component={Squad} />
-            <PrivateRoute exact path="/dashboard/feed" component={Feed} />
+            {Object.keys(profile).length > 0 ? (
+              <>
+                <PrivateRoute exact path="/dashboard/profile" component={Profile} />
+                <PrivateRoute exact path="/dashboard/account" component={Account} />
+                <PrivateRoute exact path="/dashboard/streaks" component={Streaks} />
+                <PrivateRoute exact path="/dashboard/squad" component={Squad} />
+                <PrivateRoute exact path="/dashboard/feed" component={Feed} />
+              </>
+            ) : (
+              <>
+                <PrivateRoute exact path="/dashboard/new" component={NewProfile} />
+                <PrivateRoute exact path="/dashboard/profile" component={NoProfile} />
+                <PrivateRoute exact path="/dashboard/account" component={NoProfile} />
+                <PrivateRoute exact path="/dashboard/streaks" component={NoProfile} />
+                <PrivateRoute exact path="/dashboard/squad" component={NoProfile} />
+                <PrivateRoute exact path="/dashboard/feed" component={NoProfile} />
+              </>
+            )}
+
             <Route component={NotFound} />
           </Switch>
         </div>

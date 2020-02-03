@@ -8,6 +8,10 @@ const Alerts = ({ alert }) => {
   if (messages.registration) {
     alert.success(messages.registration);
   }
+
+  if (messages.squad) {
+    alert.success(messages.squad);
+  }
   return <Fragment />;
 };
 

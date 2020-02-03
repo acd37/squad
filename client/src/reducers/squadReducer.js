@@ -1,6 +1,8 @@
 import { SET_USER_SQUAD } from '../actions/types';
 
-const initialState = {};
+const initialState = {
+  squadProfiles: []
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {

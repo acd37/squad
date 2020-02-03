@@ -16,18 +16,47 @@ module.exports = function(app) {
   app.get('/api/squad', passport.authenticate('jwt', { session: false }), (req, res) => {
     db.squad
       .findOne({
-        where: {
-          id: req.user.squadId
-        }
+        where: { id: req.user.squadId },
+        include: [
+          {
+            model: db.user
+          }
+        ]
       })
       .then(squad => {
-        res.json(squad);
+        let squadProfiles = [];
+        let squadMembers = squad.users;
+
+        for (let i = 0; i < squadMembers.length; i++) {
+          db.profile
+            .findOne({
+              where: {
+                userId: squadMembers[i].id
+              }
+            })
+            .then(squadMember => {
+              squadProfiles.push(squadMember);
+
+              if (squadProfiles.length === squadMembers.length) {
+                res.json({
+                  id: squad.id,
+                  squadName: squad.squadName,
+                  createdAt: squad.createdAt,
+                  updatedAt: squad.updatedAt,
+                  squadProfiles
+                });
+              }
+            });
+        }
+      })
+      .catch(err => {
+        console.log(err);
       });
   });
 
   // @route POST api/squad/
   // @desc creates a squad
-  app.post('/api/squad', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.post('/api/squad/create', passport.authenticate('jwt', { session: false }), (req, res) => {
     const newSquad = {
       squadName: req.body.squadName
     };
@@ -46,15 +75,93 @@ module.exports = function(app) {
               }
             }
           )
-          .then(isUpdated => {
-            if (isUpdated) {
-              res.status(200).json({
-                squadCreated: true,
-                message: 'Squad successfully created.'
-              });
+          .then(squad => {
+            let squadProfiles = [];
+            let squadMembers = squad.users;
+
+            for (let i = 0; i < squadMembers.length; i++) {
+              db.profile
+                .findOne({
+                  where: {
+                    userId: squadMembers[i].id
+                  }
+                })
+                .then(squadMember => {
+                  squadProfiles.push(squadMember);
+
+                  if (squadProfiles.length === squadMembers.length) {
+                    res.json({
+                      id: squad.id,
+                      squadName: squad.squadName,
+                      createdAt: squad.createdAt,
+                      updatedAt: squad.updatedAt,
+                      squadProfiles
+                    });
+                  }
+                });
             }
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            console.log(err);
+          });
+      })
+      .catch(err => console.log(err));
+  });
+
+  // @route POST api/squad/join
+  // @desc joins a squad
+  app.put('/api/squad/join', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { invitationCode } = req.body;
+    db.user
+      .update(
+        {
+          squadId: invitationCode
+        },
+        {
+          where: {
+            id: req.user.id
+          }
+        }
+      )
+      .then(isUpdated => {
+        if (isUpdated) {
+          db.squad
+            .findOne({
+              where: {
+                id: invitationCode
+              }
+            })
+            .then(squad => {
+              let squadProfiles = [];
+              let squadMembers = squad.users;
+
+              for (let i = 0; i < squadMembers.length; i++) {
+                db.profile
+                  .findOne({
+                    where: {
+                      userId: squadMembers[i].id
+                    }
+                  })
+                  .then(squadMember => {
+                    squadProfiles.push(squadMember);
+                    squadProfiles.push(squadMember);
+
+                    if (squadProfiles.length === squadMembers.length) {
+                      res.json({
+                        id: squad.id,
+                        squadName: squad.squadName,
+                        createdAt: squad.createdAt,
+                        updatedAt: squad.updatedAt,
+                        squadProfiles
+                      });
+                    }
+                  });
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
       })
       .catch(err => console.log(err));
   });

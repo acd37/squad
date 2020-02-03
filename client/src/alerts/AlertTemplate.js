@@ -8,7 +8,7 @@ function Alert(props) {
 const styles = {
   svg: {
     fill: '#fff',
-    fontSize: '1.2rem',
+    fontSize: '1rem',
     marginRight: 12,
     opacity: 0.9,
     width: 20,
@@ -20,7 +20,7 @@ const styles = {
     boxShadow:
       '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)',
     color: '#fff',
-    fontSize: '1.2rem',
+    fontSize: '1rem',
     letterSpacing: 0.14994,
     lineHeight: '20.02px',
     padding: '28px 32px',

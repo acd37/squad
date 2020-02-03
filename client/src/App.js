@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Provider as AlertProvider } from 'react-alert';
+import { logoutUser } from './actions/authActions';
 import store from './store';
 import jwtDecode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
@@ -30,11 +31,11 @@ if (localStorage.squad) {
   store.dispatch(setCurrentUser(decoded));
 
   // check for expired token
-  // const currentTime = Date.now() / 1000;
-  // if (decoded.exp < currentTime) {
-  //   store.dispatch(logoutUser());
-  //   window.location.href = '/';
-  // }
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    store.dispatch(logoutUser());
+    window.location.href = '/';
+  }
 }
 
 function App() {

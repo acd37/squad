@@ -2,6 +2,11 @@ module.exports = function(app) {
   const db = require('../models');
   const passport = require('passport');
   const gravatar = require('gravatar');
+  const bcrypt = require('bcryptjs');
+
+  // Load input validation
+  const validatePasswordUpdate = require('../validation/password');
+  const validateProfileInformation = require('../validation/profile');
 
   // @route GET api/profile/test
   // @desc tests the profiles api route
@@ -15,7 +20,14 @@ module.exports = function(app) {
   // @route POST api/profile
   // @desc creates a user profile
   app.post('/api/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
-    const avatar = gravatar.url(req.body.email, {
+    const { errors, isValid } = validateProfileInformation(req.body);
+
+    // check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const avatar = gravatar.url(req.user.email, {
       s: '200',
       r: 'pg',
       d: 'mm'
@@ -28,6 +40,10 @@ module.exports = function(app) {
       phone: req.body.phone,
       bio: req.body.bio,
       userId: req.user.id,
+      city: req.body.city,
+      state: req.body.state,
+      site: req.body.site,
+      company: req.body.company,
       avatar
     };
 
@@ -55,8 +71,64 @@ module.exports = function(app) {
         res.status(200).json(profile);
       })
       .catch(err => {
-        console.log(err);
+        res.status(400).json(err);
       });
+  });
+
+  // @route PUT api/profile/password
+  // @ desc updates a user password
+  app.put('/api/profile/password', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { errors, isValid } = validatePasswordUpdate(req.body.passwordInformation);
+
+    // check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const { password, newPassword } = req.body.passwordInformation;
+
+    // Find user by email
+    db.user.findOne({ where: { id: req.user.id } }).then(user => {
+      let currentUser = user.get();
+
+      // Check the password
+      bcrypt.compare(password, currentUser.password).then(isMatch => {
+        if (isMatch) {
+          db.user
+            .findOne({ where: { id: user.id } })
+            .then(user => {
+              bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newPassword, salt, (err, hash) => {
+                  if (err) throw err;
+                  hashedPassword = hash;
+
+                  db.user
+                    .update(
+                      {
+                        password: hashedPassword
+                      },
+                      {
+                        where: {
+                          id: req.user.id
+                        }
+                      }
+                    )
+                    .then(user => {
+                      res.status(200).json({
+                        message: 'Password successfully created.',
+                        passwordUpdated: true
+                      });
+                    })
+                    .catch(err => console.log(err));
+                });
+              });
+            })
+            .catch(err => console.log(err));
+        } else {
+          return res.status(400).json({ password: 'User password could not be validated.' });
+        }
+      });
+    });
   });
 
   // @route PUT api/profile/
