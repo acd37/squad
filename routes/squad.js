@@ -75,29 +75,64 @@ module.exports = function(app) {
               }
             }
           )
-          .then(squad => {
-            let squadProfiles = [];
-            let squadMembers = squad.users;
-
-            for (let i = 0; i < squadMembers.length; i++) {
-              db.profile
+          .then(isUpdated => {
+            // check if updated
+            if (isUpdated) {
+              console.log('test');
+              // if updated, get squad details
+              db.user
                 .findOne({
                   where: {
-                    userId: squadMembers[i].id
+                    id: req.user.id
                   }
                 })
-                .then(squadMember => {
-                  squadProfiles.push(squadMember);
+                .then(user => {
+                  db.squad
+                    .findOne({
+                      id: user.squadId
+                    })
+                    .then(squad => {
+                      db.user
+                        .findAll({
+                          where: {
+                            squadId: squad.id
+                          }
+                        })
+                        .then(users => {
+                          let squadProfiles = [];
 
-                  if (squadProfiles.length === squadMembers.length) {
-                    res.json({
-                      id: squad.id,
-                      squadName: squad.squadName,
-                      createdAt: squad.createdAt,
-                      updatedAt: squad.updatedAt,
-                      squadProfiles
+                          for (let i = 0; i < users.length; i++) {
+                            db.profile
+                              .findOne({
+                                where: {
+                                  userId: users[i].id
+                                }
+                              })
+                              .then(squadMember => {
+                                squadProfiles.push(squadMember);
+
+                                if (squadProfiles.length === users.length) {
+                                  res.json({
+                                    id: squad.id,
+                                    squadName: squad.squadName,
+                                    createdAt: squad.createdAt,
+                                    updatedAt: squad.updatedAt,
+                                    squadProfiles
+                                  });
+                                }
+                              });
+                          }
+                        })
+                        .catch(err => {
+                          console.log(err);
+                        });
+                    })
+                    .catch(err => {
+                      console.log(err);
                     });
-                  }
+                })
+                .catch(err => {
+                  console.log(err);
                 });
             }
           })
@@ -132,31 +167,43 @@ module.exports = function(app) {
               }
             })
             .then(squad => {
-              let squadProfiles = [];
-              let squadMembers = squad.users;
+              db.user
+                .findAll({
+                  where: {
+                    squadId: invitationCode
+                  }
+                })
+                .then(users => {
+                  let squadProfiles = [];
 
-              for (let i = 0; i < squadMembers.length; i++) {
-                db.profile
-                  .findOne({
-                    where: {
-                      userId: squadMembers[i].id
-                    }
-                  })
-                  .then(squadMember => {
-                    squadProfiles.push(squadMember);
-                    squadProfiles.push(squadMember);
+                  for (let i = 0; i < users.length; i++) {
+                    db.profile
+                      .findOne({
+                        where: {
+                          userId: users[i].id
+                        }
+                      })
+                      .then(squadMember => {
+                        squadProfiles.push(squadMember);
 
-                    if (squadProfiles.length === squadMembers.length) {
-                      res.json({
-                        id: squad.id,
-                        squadName: squad.squadName,
-                        createdAt: squad.createdAt,
-                        updatedAt: squad.updatedAt,
-                        squadProfiles
+                        if (squadProfiles.length === users.length) {
+                          res.json({
+                            id: squad.id,
+                            squadName: squad.squadName,
+                            createdAt: squad.createdAt,
+                            updatedAt: squad.updatedAt,
+                            squadProfiles
+                          });
+                        }
+                      })
+                      .catch(err => {
+                        console.log(err);
                       });
-                    }
-                  });
-              }
+                  }
+                })
+                .catch(err => {
+                  console.log(err);
+                });
             })
             .catch(err => {
               console.log(err);

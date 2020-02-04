@@ -24,7 +24,7 @@ export const createNewSquad = squadName => dispatch => {
     .then(res => {
       dispatch({
         type: SET_USER_SQUAD,
-        payload: res.data.squad
+        payload: res.data
       });
       dispatch({
         type: CREATE_MESSAGE,
@@ -47,7 +47,7 @@ export const joinSquad = invitationCode => dispatch => {
     .then(res => {
       dispatch({
         type: SET_USER_SQUAD,
-        payload: res.data.squad
+        payload: res.data
       });
       dispatch({
         type: CREATE_MESSAGE,
