@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Divider, TextField, Grid, Button, Select } from '@material-ui/core/';
 import Box from '../components/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
+// import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 import { createUserProfile } from '../actions/profileActions';
 
 const useStyles = makeStyles(theme => ({

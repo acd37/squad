@@ -2,7 +2,14 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwtDecode from 'jwt-decode';
 
-import { SET_CURRENT_USER, GET_ERRORS, CREATE_MESSAGE } from './types';
+import {
+  SET_CURRENT_USER,
+  GET_ERRORS,
+  CREATE_MESSAGE,
+  SET_USER_SQUAD,
+  SET_USER_PROFILE,
+  CLEAR_ERRORS
+} from './types';
 
 export const loginUser = userData => dispatch => {
   console.log(userData);
@@ -73,4 +80,21 @@ export const logoutUser = () => dispatch => {
 
   // set current user to {}
   dispatch(setCurrentUser({}));
+
+  // clear errors
+  dispatch({
+    type: CLEAR_ERRORS
+  });
+
+  // set profile to {}
+  dispatch({
+    type: SET_USER_PROFILE,
+    payload: {}
+  });
+
+  // set squad to {}
+  dispatch({
+    type: SET_USER_SQUAD,
+    payload: {}
+  });
 };

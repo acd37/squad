@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Typography, Divider, Grid, Button } from '@material-ui/core/';
-import LocalBarOutlinedIcon from '@material-ui/icons/LocalBarOutlined';
-import SmokeFreeOutlinedIcon from '@material-ui/icons/SmokeFreeOutlined';
-import DirectionsRunOutlinedIcon from '@material-ui/icons/DirectionsRunOutlined';
+// import LocalBarOutlinedIcon from '@material-ui/icons/LocalBarOutlined';
+// import SmokeFreeOutlinedIcon from '@material-ui/icons/SmokeFreeOutlined';
+// import DirectionsRunOutlinedIcon from '@material-ui/icons/DirectionsRunOutlined';
 import Box from '../components/Box';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -41,10 +41,10 @@ export default function Streaks() {
   const streaks = useSelector(state => state.streaks);
   const oneDay = 1000 * 60 * 60 * 24;
 
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('individual');
-  const [title, setTitle] = React.useState('');
-  const [length, setLength] = React.useState();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('individual');
+  const [title, setTitle] = useState('');
+  const [length, setLength] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -59,14 +59,14 @@ export default function Streaks() {
   };
 
   const handleNewStreak = event => {
-    const newStreak = {
-      id: streaks.length + 1,
-      squadId: 123,
-      title: title,
-      length: length,
-      icon: '',
-      streak: 0
-    };
+    // const newStreak = {
+    //   id: streaks.length + 1,
+    //   squadId: 123,
+    //   title: title,
+    //   length: length,
+    //   icon: '',
+    //   streak: 0
+    // };
     handleClose();
   };
 

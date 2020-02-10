@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Typography,
   Divider,
@@ -16,10 +16,10 @@ import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import CallOutlinedIcon from '@material-ui/icons/CallOutlined';
 import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
-import LocalBarOutlinedIcon from '@material-ui/icons/LocalBarOutlined';
-import SmokeFreeOutlinedIcon from '@material-ui/icons/SmokeFreeOutlined';
+// import LocalBarOutlinedIcon from '@material-ui/icons/LocalBarOutlined';
+// import SmokeFreeOutlinedIcon from '@material-ui/icons/SmokeFreeOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
-import DirectionsRunOutlinedIcon from '@material-ui/icons/DirectionsRunOutlined';
+// import DirectionsRunOutlinedIcon from '@material-ui/icons/DirectionsRunOutlined';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { formatPhoneNumber } from '../utils/phoneNumberFormat';
@@ -63,7 +63,6 @@ export default function Profile() {
   const streaks = useSelector(state => state.streaks);
   const userEmail = useSelector(state => state.auth.user.email);
   const squad = useSelector(state => state.squad);
-  const dispatch = useDispatch();
 
   const oneDay = 1000 * 60 * 60 * 24;
 

@@ -6,7 +6,7 @@ import Copyright from '../utils/Copyright';
 import { Avatar, Button, TextField, Paper, Box, Grid, Typography } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import PasswordStrengthMeter from '../utils/PasswordStrengthMeter';
+// import PasswordStrengthMeter from '../utils/PasswordStrengthMeter';
 
 const useStyles = makeStyles(theme => ({
   root: {

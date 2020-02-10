@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './PasswordStrengthMeter.css';
 import zxcvbn from 'zxcvbn';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { withStyles } from '@material-ui/core/styles';
