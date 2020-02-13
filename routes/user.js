@@ -2,6 +2,7 @@ module.exports = function(app) {
   const bcrypt = require('bcryptjs');
   const db = require('../models');
   const passport = require('passport');
+  const axios = require('axios');
 
   // Load input validation
   const validateRegisterInput = require('../validation/register');
@@ -39,44 +40,56 @@ module.exports = function(app) {
   // @route POST api/user/
   // @desc creates a new user
   app.post('/api/user', (req, res) => {
-    const { errors, isValid } = validateRegisterInput(req.body);
+    // check recaptcha
+    const { recaptcha } = req.body;
 
-    // check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
+    axios
+      .post(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${recaptcha}`
+      )
+      .then(response => {
+        console.log(response);
+        if (response.data.success) {
+          const { errors, isValid } = validateRegisterInput(req.body);
 
-    db.user
-      .findOne({
-        where: {
-          email: req.body.email
-        }
-      })
-      .then(user => {
-        if (user) {
-          return res.status(400).json({ email: 'This email already exists.' });
-        } else {
-          const newUser = {
-            email: req.body.email,
-            password: req.body.password
-          };
+          // check validation
+          if (!isValid) {
+            return res.status(400).json(errors);
+          }
 
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              newUser.password = hash;
+          db.user
+            .findOne({
+              where: {
+                email: req.body.email
+              }
+            })
+            .then(user => {
+              if (user) {
+                return res.status(400).json({ email: 'This email already exists.' });
+              } else {
+                const newUser = {
+                  email: req.body.email,
+                  password: req.body.password
+                };
 
-              db.user
-                .create(newUser)
-                .then(user => {
-                  res.status(200).json({
-                    message: 'User account successfully created.',
-                    userCreated: true
+                bcrypt.genSalt(10, (err, salt) => {
+                  bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    newUser.password = hash;
+
+                    db.user
+                      .create(newUser)
+                      .then(user => {
+                        res.status(200).json({
+                          message: 'User account successfully created.',
+                          userCreated: true
+                        });
+                      })
+                      .catch(err => console.log(err));
                   });
-                })
-                .catch(err => console.log(err));
+                });
+              }
             });
-          });
         }
       });
   });

@@ -40,8 +40,6 @@ export const loginUser = userData => dispatch => {
 
 // register
 export const registerUser = (userData, history) => dispatch => {
-  console.log(userData);
-
   axios
     .post('/api/user', userData)
     .then(res => {

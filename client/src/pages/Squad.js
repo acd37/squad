@@ -60,11 +60,9 @@ export default function Squad() {
             Squad Name: <span className={classes.squadInfo}>{squad.squadName}</span>
           </Typography>
           <Typography variant="subtitle2">
-            Squad Size: <span className={classes.squadInfo}></span>
+            Squad Size: <span className={classes.squadInfo}>{squad.squadProfiles.length}</span>
           </Typography>
-          <Typography variant="subtitle2">
-            Captain: <span className={classes.squadInfo}></span>
-          </Typography>
+
           <Divider />
           <Typography variant="subtitle2"></Typography>
           <Alert severity="warning">Only share your invite code with people you trust.</Alert>

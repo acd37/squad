@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Typography, Divider, TextField, Grid, Button, Select } from '@material-ui/core/';
 import Box from '../components/Box';
 import { makeStyles } from '@material-ui/core/styles';
-// import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 import { createUserProfile } from '../actions/profileActions';
 
 const useStyles = makeStyles(theme => ({
@@ -50,9 +49,7 @@ export default function NewProfile() {
   const [handle, setHandle] = useState('');
 
   const errors = useSelector(state => state.errors);
-
   const classes = useStyles();
-
   const dispatch = useDispatch();
 
   const handleSaveProfile = () => {

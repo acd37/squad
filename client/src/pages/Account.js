@@ -311,6 +311,9 @@ export default function Account() {
               />
             </div>
             <div className={classes.formDisplaySingleLine}>
+              <Typography variant="body2">
+                Currently, you cannot change your email address.
+              </Typography>
               <TextField
                 disabled
                 required
@@ -326,6 +329,7 @@ export default function Account() {
                 onChange={e => setEmail(e.target.value)}
               />
             </div>
+
             <div className={classes.formDisplaySingleLine}>
               <TextField
                 fullWidth

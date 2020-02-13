@@ -75,7 +75,6 @@ export const createUserProfile = profileInformation => dispatch => {
           registration: 'Profile was successfully created.'
         }
       });
-      history.push('/dashboard/profile');
     })
     .catch(err => {
       dispatch({

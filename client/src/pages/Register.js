@@ -7,6 +7,7 @@ import { Avatar, Button, TextField, Paper, Box, Grid, Typography } from '@materi
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 // import PasswordStrengthMeter from '../utils/PasswordStrengthMeter';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,6 +46,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
+  const [recaptcha, setRecaptcha] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth.isAuthenticated);
@@ -62,10 +64,14 @@ const Register = () => {
     }
   });
 
+  const onChange = value => {
+    setRecaptcha(value);
+  };
+
   const handleRegister = e => {
     e.preventDefault();
-    // check validation
-    dispatch(registerUser({ email, password, password2 }, history));
+
+    dispatch(registerUser({ email, password, password2, recaptcha }, history));
   };
 
   const classes = useStyles();
@@ -142,6 +148,7 @@ const Register = () => {
                 </Link>
               </Grid>
             </Grid>
+            <ReCAPTCHA sitekey="6LfiZdgUAAAAACueBfeT0Pe0N4lIffi5Oco-RR61" onChange={onChange} />
             <Box mt={5}>
               <Copyright />
             </Box>

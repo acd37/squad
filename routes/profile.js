@@ -50,10 +50,7 @@ module.exports = function(app) {
     db.profile
       .create(newProfile)
       .then(user => {
-        res.status(200).json({
-          message: 'Profile was successfully created.',
-          profileCreated: true
-        });
+        res.status(200).json(newProfile);
       })
       .catch(err => console.log(err));
   });
