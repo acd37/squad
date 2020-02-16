@@ -8,6 +8,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 // import PasswordStrengthMeter from '../utils/PasswordStrengthMeter';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { clearErrors } from '../actions/errorActions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -143,7 +144,7 @@ const Register = () => {
             <Grid container>
               <Grid item xs>
                 Already have an account?{' '}
-                <Link to="/" className={classes.link}>
+                <Link to="/" className={classes.link} onClick={() => dispatch(clearErrors())}>
                   Back to login.
                 </Link>
               </Grid>

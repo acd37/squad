@@ -13,7 +13,11 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import NotFound from './pages/NotFound';
-
+import NewProfile from './pages/NewProfile';
+import Profile from './pages/Profile';
+import Account from './pages/Account';
+import Streaks from './pages/Streaks';
+import Squad from './pages/Squad';
 import Alerts from './alerts/Alerts';
 import AlertTemplate from './alerts/AlertTemplate';
 

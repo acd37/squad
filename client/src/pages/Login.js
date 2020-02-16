@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { loginUser } from '../actions/authActions';
+import { clearErrors } from '../actions/errorActions';
 import Copyright from '../utils/Copyright';
 
 // MaterialUI Importats
@@ -122,7 +123,11 @@ const Login = () => {
               </Grid>
               <Grid item>
                 Don't have an account?{' '}
-                <Link to="/register" className={classes.link}>
+                <Link
+                  to="/register"
+                  className={classes.link}
+                  onClick={() => dispatch(clearErrors())}
+                >
                   Sign up
                 </Link>
               </Grid>

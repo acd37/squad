@@ -12,8 +12,6 @@ import {
 } from './types';
 
 export const loginUser = userData => dispatch => {
-  console.log(userData);
-
   axios
     .post('/api/auth/login', userData)
     .then(res => {

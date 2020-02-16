@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Typography,
@@ -16,10 +16,7 @@ import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import CallOutlinedIcon from '@material-ui/icons/CallOutlined';
 import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
-// import LocalBarOutlinedIcon from '@material-ui/icons/LocalBarOutlined';
-// import SmokeFreeOutlinedIcon from '@material-ui/icons/SmokeFreeOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
-// import DirectionsRunOutlinedIcon from '@material-ui/icons/DirectionsRunOutlined';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { formatPhoneNumber } from '../utils/phoneNumberFormat';
@@ -56,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Profile() {
+const Profile = () => {
   const classes = useStyles();
 
   const profile = useSelector(state => state.profile);
@@ -180,4 +177,6 @@ export default function Profile() {
       </Grid>
     </div>
   );
-}
+};
+
+export default Profile;

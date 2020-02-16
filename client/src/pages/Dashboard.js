@@ -22,14 +22,15 @@ import AccountIcon from '@material-ui/icons/AccountCircleOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 import NoProfile from './NoProfile';
-import Profile from './Profile';
+
+import NewProfile from './NewProfile';
 import Account from './Account';
 import Streaks from './Streaks';
 import Squad from './Squad';
-import NewProfile from './NewProfile';
 import PrivateRoute from '../utils/PrivateRoute';
 import { Route, Link, Switch } from 'react-router-dom';
 import NotFound from './NotFound';
+import Profile from './Profile';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
@@ -154,6 +155,20 @@ function Dashboard(props) {
 
   const profile = useSelector(state => state.profile);
 
+  let dashboardContent;
+  if (Object.keys(profile).length > 0) {
+    dashboardContent = (
+      <Switch>
+        <PrivateRoute exact path="/dashboard/account" component={Account} />
+        <PrivateRoute exact path="/dashboard/squad" component={Squad} />
+        <PrivateRoute exact path="/dashboard/streaks" component={Streaks} />
+        <PrivateRoute exact path="/dashboard/profile" component={Profile} />
+      </Switch>
+    );
+  } else {
+    dashboardContent = <NewProfile />;
+  }
+
   const drawer = (
     <div>
       <div
@@ -272,28 +287,7 @@ function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
-        <div>
-          <Switch>
-            {Object.keys(profile).length > 0 ? (
-              <>
-                <PrivateRoute exact path="/dashboard/profile" component={Profile} />
-                <PrivateRoute exact path="/dashboard/account" component={Account} />
-                <PrivateRoute exact path="/dashboard/streaks" component={Streaks} />
-                <PrivateRoute exact path="/dashboard/squad" component={Squad} />
-              </>
-            ) : (
-              <>
-                <PrivateRoute exact path="/dashboard/new" component={NewProfile} />
-                <PrivateRoute exact path="/dashboard/profile" component={NoProfile} />
-                <PrivateRoute exact path="/dashboard/account" component={NoProfile} />
-                <PrivateRoute exact path="/dashboard/streaks" component={NoProfile} />
-                <PrivateRoute exact path="/dashboard/squad" component={NoProfile} />
-              </>
-            )}
-
-            <Route component={NotFound} />
-          </Switch>
-        </div>
+        <div>{dashboardContent}</div>
       </main>
     </div>
   );
