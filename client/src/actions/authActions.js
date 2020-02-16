@@ -7,6 +7,7 @@ import {
   GET_ERRORS,
   CREATE_MESSAGE,
   SET_USER_SQUAD,
+  SET_USER_STREAKS,
   SET_USER_PROFILE,
   CLEAR_ERRORS
 } from './types';
@@ -92,5 +93,11 @@ export const logoutUser = () => dispatch => {
   dispatch({
     type: SET_USER_SQUAD,
     payload: {}
+  });
+
+  // set streaks to []
+  dispatch({
+    type: SET_USER_STREAKS,
+    payload: []
   });
 };
