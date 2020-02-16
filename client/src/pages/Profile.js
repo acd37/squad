@@ -95,15 +95,25 @@ export default function Profile() {
               {streaks.map((item, idx) => (
                 <div key={idx} style={{ marginRight: 10 }}>
                   <div className={classes.circularProgressBar}>
-                    <CircularProgressbarWithChildren
-                      value={(new Date() - Date.parse(item.createdAt)) / oneDay}
-                      maxValue={item.length}
-                      styles={buildStyles({
-                        pathColor: '#fe446c'
-                      })}
-                    >
-                      <span style={{ color: '#fe446c' }}>{item.icon}</span>
-                    </CircularProgressbarWithChildren>
+                    {Math.floor((new Date() - Date.parse(item.createdAt)) / oneDay) >
+                    item.length ? (
+                      <CircularProgressbarWithChildren
+                        value={(new Date() - Date.parse(item.createdAt)) / oneDay}
+                        maxValue={item.length}
+                        styles={buildStyles({
+                          pathColor: '#e8b923'
+                        })}
+                      ></CircularProgressbarWithChildren>
+                    ) : (
+                      <CircularProgressbarWithChildren
+                        value={(new Date() - Date.parse(item.createdAt)) / oneDay}
+                        maxValue={item.length}
+                        styles={buildStyles({
+                          pathColor: '#fe446c'
+                        })}
+                      ></CircularProgressbarWithChildren>
+                    )}
+
                     <span style={{ fontSize: '0.5rem', marginTop: 5 }}>{item.title}</span>
                   </div>
                 </div>

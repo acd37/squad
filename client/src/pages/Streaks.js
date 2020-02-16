@@ -189,7 +189,6 @@ export default function Streaks() {
                         pathColor: '#fe446c'
                       })}
                     >
-                      <span style={{ color: '#fe446c' }}>{item.icon}</span>
                       <div style={{ fontSize: '1.2rem' }}>
                         {Math.floor((new Date() - Date.parse(item.createdAt)) / oneDay)} /
                         {item.length}

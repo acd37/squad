@@ -12,13 +12,6 @@ module.exports = function(sequelize, Sequelize) {
     length: {
       type: Sequelize.INTEGER,
       allowNull: false
-    },
-    isComplete: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false
-    },
-    icon: {
-      type: Sequelize.STRING
     }
   });
 
