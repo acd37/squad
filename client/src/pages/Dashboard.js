@@ -1,4 +1,10 @@
 import React, { useEffect } from 'react';
+import { Link, Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../actions/authActions';
+import { getUserProfile } from '../actions/profileActions';
+import { getUserStreaks } from '../actions/streakActions';
+import { getUserSquad, getSquadMembers } from '../actions/squadActions';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -11,7 +17,6 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  InputBase,
   Typography
 } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
@@ -20,23 +25,12 @@ import ListIcon from '@material-ui/icons/ListOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import AccountIcon from '@material-ui/icons/AccountCircleOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
-import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
-import NoProfile from './NoProfile';
-
 import NewProfile from './NewProfile';
 import Account from './Account';
 import Streaks from './Streaks';
 import Squad from './Squad';
 import PrivateRoute from '../utils/PrivateRoute';
-import { Route, Link, Switch } from 'react-router-dom';
-import NotFound from './NotFound';
 import Profile from './Profile';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser } from '../actions/authActions';
-import { getUserProfile } from '../actions/profileActions';
-import { getUserStreaks } from '../actions/streakActions';
-import { getUserSquad, getSquadMembers } from '../actions/squadActions';
 
 const drawerWidth = 260;
 

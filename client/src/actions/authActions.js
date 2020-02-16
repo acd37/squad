@@ -68,7 +68,6 @@ export const setCurrentUser = decoded => {
 
 // logout user
 export const logoutUser = () => dispatch => {
-  console.log('here');
   // remove token from localStorage
   localStorage.removeItem('squad');
 

@@ -59,12 +59,6 @@ const Register = () => {
     }
   });
 
-  useEffect(() => {
-    if (errors) {
-      console.log(errors);
-    }
-  });
-
   const onChange = value => {
     setRecaptcha(value);
   };

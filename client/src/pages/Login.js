@@ -62,10 +62,6 @@ const Login = () => {
     dispatch(loginUser({ email, password }));
   };
 
-  const recaptchaValue = value => {
-    console.log(value);
-  };
-
   const classes = useStyles();
 
   return (

@@ -1,17 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Typography,
-  Divider,
-  Button,
-  Grid,
-  TextField,
-  Paper,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText
-} from '@material-ui/core/';
+import { Typography, Divider, Button, Grid, TextField, Paper } from '@material-ui/core/';
 import Box from '../components/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
