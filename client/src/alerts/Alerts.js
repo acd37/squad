@@ -12,6 +12,11 @@ const Alerts = ({ alert }) => {
   if (messages.squad) {
     alert.success(messages.squad);
   }
+
+  if (messages.streak) {
+    alert.success(messages.streak);
+  }
+
   return <Fragment />;
 };
 

@@ -40,7 +40,7 @@ module.exports = function(app) {
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
       const newUserStreak = {
-        description: req.body.description,
+        title: req.body.title,
         length: req.body.length,
         userId: req.user.id
       };
@@ -62,7 +62,7 @@ module.exports = function(app) {
   app.post('/api/streak/squad', passport.authenticate('jwt', { session: false }), (req, res) => {
     if (req.user.squadId !== null) {
       const newSquadStreak = {
-        description: req.body.description,
+        title: req.body.title,
         length: req.body.length,
         squadId: req.user.squadId
       };
@@ -86,9 +86,9 @@ module.exports = function(app) {
 
   // @route  DELETE api/streak
   // @desc deletes a streak
-  app.delete('/api/streak/', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.delete('/api/streak/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     db.streak
-      .destroy({ where: { id: req.body.id } })
+      .destroy({ where: { id: req.params.id } })
       .then(status => {
         if (status === 1) {
           res.status(200).json({

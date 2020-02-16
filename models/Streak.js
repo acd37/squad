@@ -5,7 +5,7 @@ module.exports = function(sequelize, Sequelize) {
       primaryKey: true,
       defaultValue: Sequelize.UUIDV4
     },
-    description: {
+    title: {
       type: Sequelize.STRING,
       allowNull: false
     },
