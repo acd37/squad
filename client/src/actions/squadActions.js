@@ -18,6 +18,18 @@ export const getUserSquad = () => dispatch => {
     });
 };
 
+export const updateSquad = squadData => dispatch => {
+  axios.put('/api/squad', squadData).then(res => {
+    dispatch(getUserSquad());
+    dispatch({
+      type: CREATE_MESSAGE,
+      payload: {
+        squad: res.data.message
+      }
+    });
+  });
+};
+
 export const createNewSquad = squadName => dispatch => {
   axios
     .post('/api/squad/create', { squadName })

@@ -228,4 +228,31 @@ module.exports = function(app) {
       })
       .catch(err => res.json(err));
   });
+
+  // @route PUT api/squad/
+  // @desc updates a squad name
+  app.put('/api/squad', passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log(req.body);
+    db.squad
+      .update(
+        {
+          squadName: req.body.squadName
+        },
+        {
+          where: {
+            id: req.body.squadId
+          }
+        }
+      )
+      .then(isUpdated => {
+        console.log(isUpdated);
+        if (isUpdated) {
+          res.json({
+            message: 'Squad name successfully updated',
+            squadUpdated: true
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  });
 };

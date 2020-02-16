@@ -22,6 +22,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import IconButton from '@material-ui/core/IconButton';
+import GroupIcon from '@material-ui/icons/Group';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -138,9 +139,6 @@ export default function Streaks() {
         </DialogActions>
       </Dialog>
 
-      <Typography variant="h4" className={classes.subtitle}>
-        Individual Streaks
-      </Typography>
       <Grid container spacing={2}>
         {streaks
           .filter(item => !item.isComplete)
@@ -149,7 +147,15 @@ export default function Streaks() {
               <Box>
                 <CardHeader
                   className={classes.header}
-                  avatar={<Avatar aria-label="recipe" src={profileImage} />}
+                  avatar={
+                    item.squadId !== null ? (
+                      <Avatar>
+                        <GroupIcon />
+                      </Avatar>
+                    ) : (
+                      <Avatar aria-label="recipe" src={profileImage} />
+                    )
+                  }
                   action={
                     <IconButton aria-label="settings">
                       <DeleteOutlineIcon onClick={() => handleDeleteStreak(item.id)} />
@@ -159,19 +165,37 @@ export default function Streaks() {
                   subheader={item.squadId !== null ? 'Squad Streak' : 'Individual Streak'}
                 />
                 <div className={classes.circularProgressBar}>
-                  <CircularProgressbarWithChildren
-                    value={(new Date() - Date.parse(item.createdAt)) / oneDay}
-                    maxValue={item.length}
-                    styles={buildStyles({
-                      pathColor: '#fe446c'
-                    })}
-                  >
-                    <span style={{ color: '#fe446c' }}>{item.icon}</span>
-                    <div style={{ fontSize: '1.2rem' }}>
-                      {Math.floor((new Date() - Date.parse(item.createdAt)) / oneDay)}/{' '}
-                      {item.length}
-                    </div>
-                  </CircularProgressbarWithChildren>
+                  {Math.floor((new Date() - Date.parse(item.createdAt)) / oneDay) > item.length ? (
+                    <CircularProgressbarWithChildren
+                      value={(new Date() - Date.parse(item.createdAt)) / oneDay}
+                      maxValue={item.length}
+                      styles={buildStyles({
+                        pathColor: '#e8b923'
+                      })}
+                    >
+                      <div style={{ fontSize: '1.2rem' }}>
+                        <Typography variant="overline">
+                          {item.length} /{item.length}
+                        </Typography>
+                        <br />
+                        <Typography variant="overline">Completed!!</Typography>
+                      </div>
+                    </CircularProgressbarWithChildren>
+                  ) : (
+                    <CircularProgressbarWithChildren
+                      value={(new Date() - Date.parse(item.createdAt)) / oneDay}
+                      maxValue={item.length}
+                      styles={buildStyles({
+                        pathColor: '#fe446c'
+                      })}
+                    >
+                      <span style={{ color: '#fe446c' }}>{item.icon}</span>
+                      <div style={{ fontSize: '1.2rem' }}>
+                        {Math.floor((new Date() - Date.parse(item.createdAt)) / oneDay)} /
+                        {item.length}
+                      </div>
+                    </CircularProgressbarWithChildren>
+                  )}
                 </div>
               </Box>
             </Grid>

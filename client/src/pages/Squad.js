@@ -16,7 +16,8 @@ import Box from '../components/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import { useSelector, useDispatch } from 'react-redux';
-import { joinSquad, createNewSquad } from '../actions/squadActions';
+import { joinSquad, createNewSquad, updateSquad } from '../actions/squadActions';
+import { formatPhoneNumber } from '../utils/phoneNumberFormat';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -29,6 +30,31 @@ const useStyles = makeStyles(theme => ({
   squadInfo: {
     color: theme.palette.primary.main,
     fontSize: '0.8rem'
+  },
+  profileCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  image: {
+    borderRadius: '50%',
+    height: 80,
+    width: 80,
+    filter: 'grayscale(100%)'
+  },
+  name: {
+    color: theme.palette.primary.main
+  },
+  edit: {
+    color: 'rgba(0,0,0,0.6)',
+    fontSize: '0.5rem',
+    marginLeft: 10,
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer'
+    }
   }
 }));
 
@@ -36,8 +62,10 @@ export default function Squad() {
   const squad = useSelector(state => state.squad);
   const errors = useSelector(state => state.errors);
 
+  const [editable, setEditable] = useState(false);
   const [squadInvitationCode, setSquadInvitationCode] = useState('');
   const [newSquadName, setNewSquadName] = useState('');
+  const [squadName, setSquadName] = useState('');
 
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -50,6 +78,11 @@ export default function Squad() {
     dispatch(joinSquad(squadInvitationCode));
   };
 
+  const handleUpdateSquad = () => {
+    dispatch(updateSquad({ squadName, squadId: squad.id }));
+    setEditable(false);
+  };
+
   let squadContent;
 
   if (Object.keys(squad).length > 1) {
@@ -57,7 +90,29 @@ export default function Squad() {
       <div>
         <Box>
           <Typography variant="subtitle2">
-            Squad Name: <span className={classes.squadInfo}>{squad.squadName}</span>
+            Squad Name:{' '}
+            {editable ? (
+              <span>
+                <input
+                  placeholder={squad.squadName}
+                  value={squadName}
+                  onChange={e => setSquadName(e.target.value)}
+                />
+                <span className={classes.edit} onClick={() => setEditable(!editable)}>
+                  Cancel
+                </span>
+                <span className={classes.edit} onClick={handleUpdateSquad}>
+                  Save
+                </span>
+              </span>
+            ) : (
+              <span>
+                <span className={classes.squadInfo}>{squad.squadName}</span>
+                <span className={classes.edit} onClick={() => setEditable(!editable)}>
+                  Edit
+                </span>
+              </span>
+            )}
           </Typography>
           <Typography variant="subtitle2">
             Squad Size: <span className={classes.squadInfo}>{squad.squadProfiles.length}</span>
@@ -136,27 +191,35 @@ export default function Squad() {
       </Grid>
 
       <Grid container spacing={2}>
-        <List>
-          {squad.squadProfiles.map((member, idx) => (
-            <div key={idx}>
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt={member.firstName} src={member.avatar} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={`${member.firstName} ${member.lastName}`}
-                  secondary={
-                    <React.Fragment>
-                      <Typography component="span" variant="body2" color="textPrimary"></Typography>
-                      {member.bio}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-              <Divider />
-            </div>
-          ))}
-        </List>
+        {squad.squadProfiles.map((member, idx) => (
+          <Grid item xs={12} md={4} lg={3} key={idx}>
+            <Box>
+              <div className={classes.profileCard}>
+                <img className={classes.image} alt={member.firstName} src={member.avatar} />
+                <Typography
+                  className={classes.name}
+                  variant="overline"
+                  display="block"
+                  gutterBottom
+                >
+                  {member.firstName} {member.lastName}
+                </Typography>
+                <Typography variant="caption" display="block" gutterBottom>
+                  {member.handle}{' '}
+                </Typography>
+                <Typography variant="overline" display="block">
+                  {member.email}{' '}
+                </Typography>
+                <Typography variant="overline" display="block">
+                  {member.phone.length > 0 ? formatPhoneNumber(member.phone) : 'No phone'}
+                </Typography>
+                <Typography variant="overline" display="block">
+                  {member.city}, {member.state}
+                </Typography>
+              </div>
+            </Box>
+          </Grid>
+        ))}
       </Grid>
     </div>
   );

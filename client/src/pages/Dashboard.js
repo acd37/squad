@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import ListIcon from '@material-ui/icons/ListOutlined';
 import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import AccountIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -27,7 +26,6 @@ import Profile from './Profile';
 import Account from './Account';
 import Streaks from './Streaks';
 import Squad from './Squad';
-import Feed from './Feed';
 import NewProfile from './NewProfile';
 import PrivateRoute from '../utils/PrivateRoute';
 import { Route, Link, Switch } from 'react-router-dom';
@@ -204,15 +202,6 @@ function Dashboard(props) {
           </ListItem>
         </Link>
 
-        <Link to="/dashboard/feed" className={classes.normalizeLink}>
-          <ListItem button>
-            <ListItemIcon>
-              <SmsOutlinedIcon className={classes.drawerIcon} />
-            </ListItemIcon>
-            <ListItemText primary="Feed" />
-          </ListItem>
-        </Link>
-
         <Divider style={{ margin: '5%', border: '0.1px solid rgba(255, 255, 255, 0.20)' }} />
 
         <Link to="/dashboard/account" className={classes.normalizeLink}>
@@ -291,7 +280,6 @@ function Dashboard(props) {
                 <PrivateRoute exact path="/dashboard/account" component={Account} />
                 <PrivateRoute exact path="/dashboard/streaks" component={Streaks} />
                 <PrivateRoute exact path="/dashboard/squad" component={Squad} />
-                <PrivateRoute exact path="/dashboard/feed" component={Feed} />
               </>
             ) : (
               <>
@@ -300,7 +288,6 @@ function Dashboard(props) {
                 <PrivateRoute exact path="/dashboard/account" component={NoProfile} />
                 <PrivateRoute exact path="/dashboard/streaks" component={NoProfile} />
                 <PrivateRoute exact path="/dashboard/squad" component={NoProfile} />
-                <PrivateRoute exact path="/dashboard/feed" component={NoProfile} />
               </>
             )}
 

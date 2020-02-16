@@ -91,9 +91,9 @@ export default function Profile() {
         <Grid item xs={12} md={6} lg={4}>
           <Box>
             <Typography variant="h5">Streaks</Typography>
-            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
               {streaks.map((item, idx) => (
-                <div key={idx}>
+                <div key={idx} style={{ marginRight: 10 }}>
                   <div className={classes.circularProgressBar}>
                     <CircularProgressbarWithChildren
                       value={(new Date() - Date.parse(item.createdAt)) / oneDay}
@@ -104,8 +104,7 @@ export default function Profile() {
                     >
                       <span style={{ color: '#fe446c' }}>{item.icon}</span>
                     </CircularProgressbarWithChildren>
-                    {/*<span style={{ fontSize: '0.5rem', marginTop: 5 }}>{item.streak}/{item.max}</span>*/}
-                    <span style={{ fontSize: '0.5rem', marginTop: 5 }}>{item.description}</span>
+                    <span style={{ fontSize: '0.5rem', marginTop: 5 }}>{item.title}</span>
                   </div>
                 </div>
               ))}
