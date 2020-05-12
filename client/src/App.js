@@ -19,7 +19,7 @@ import AlertTemplate from './alerts/AlertTemplate';
 // redux
 import { setCurrentUser } from './actions/authActions';
 
-// // persistent login
+// persistent login
 if (localStorage.squad) {
   setAuthToken(localStorage.squad);
 
